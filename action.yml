@@ -13,11 +13,7 @@ inputs:
   amlogic_kernel:
     description: 'Choose kernel.'
     required: false
-    default: '5.10.80_5.4.160'
-  auto_kernel:
-    description: 'Auto use the latest kernel.'
-    required: false
-    default: 'true'
+    default: '5.10.31.TF_5.4.113'
   amlogic_size:
     description: 'Choose root size.'
     required: false
@@ -40,7 +36,6 @@ runs:
         make_command=" -d"
         [ -n ${{ inputs.amlogic_openwrt }} ] && make_command="${make_command} -b ${{ inputs.amlogic_openwrt }}"
         [ -n ${{ inputs.amlogic_kernel }} ] && make_command="${make_command} -k ${{ inputs.amlogic_kernel }}"
-        [ -n ${{ inputs.auto_kernel }} ] && make_command="${make_command} -a ${{ inputs.auto_kernel }}"
         [ -n ${{ inputs.amlogic_size }} ] && make_command="${make_command} -s ${{ inputs.amlogic_size }}"
         sudo chmod +x make
         sudo ./make ${make_command}
@@ -53,7 +48,6 @@ runs:
         echo -e "PACKAGED_STATUS: success"
         echo -e "PACKAGED_OUTPUTPATH files list:"
         echo -e "$(ls ${PWD}/out 2>/dev/null) \n"
-
 branding:
   icon: 'terminal'
   color: 'gray-dark'
